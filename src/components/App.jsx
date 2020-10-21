@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/styles.css";
+import Navbar from "./Navbar";
 
 export default function App() {
   const [currentView, setCurrentView] = useState("AllPhotos");
@@ -8,7 +9,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <div className="navbar">Hi</div>
+      <Navbar />
       <h1>Hello World!</h1>
     </div>
   );
