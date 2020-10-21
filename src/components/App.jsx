@@ -27,6 +27,7 @@ export default function App() {
   }
 
   function updatePhotos(photo) {
+    console.log("PHOTO in app", photo);
     setPhotos([...AllPhotos, photo]);
   }
 
