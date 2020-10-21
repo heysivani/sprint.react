@@ -10,8 +10,9 @@ export default function App() {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState("");
 
+  // Get photos on mount
   useEffect(() => {
-    listObjects() // add all of the Keys to photos?
+    listObjects()
       .then(pics => {
         const picKeys = pics.map(pic => pic.Key);
         return picKeys;
@@ -21,11 +22,24 @@ export default function App() {
       });
   }, []);
 
+  function updateView(string) {
+    setCurrentView(string);
+  }
+
+  function updatePhotos(photo) {
+    setPhotos([...AllPhotos, photo]);
+  }
+
+  console.log("Photos", photos);
+
   return (
     <div className="app">
-      <Navbar />
+      <Navbar
+        currentView={currentView}
+        updateView={updateView}
+        updatePhotos={updatePhotos}
+      />
       {currentView === "AllPhotos" ? <AllPhotos /> : <SinglePhoto />}
-
       <h1>Hello World!</h1>
     </div>
   );
