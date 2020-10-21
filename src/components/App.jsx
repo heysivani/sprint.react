@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/styles.css";
 import Navbar from "./Navbar";
 import SinglePhoto from "./SinglePhoto";
@@ -10,15 +10,16 @@ export default function App() {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState("");
 
-  listObjects() // add all of the Keys to photos?
-    .then(pics => {
-      const picKeys = pics.map(pic => pic.Key);
-      return picKeys;
-    })
-    .then(picKeys => {
-      setPhotos(picKeys);
-    });
-  console.log(photos);
+  useEffect(() => {
+    listObjects() // add all of the Keys to photos?
+      .then(pics => {
+        const picKeys = pics.map(pic => pic.Key);
+        return picKeys;
+      })
+      .then(picKeys => {
+        setPhotos(picKeys);
+      });
+  }, []);
 
   return (
     <div className="app">
