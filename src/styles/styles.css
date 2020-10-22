@@ -8,6 +8,7 @@ body {
 
 .imageCell {
   display: inline;
+  width: 100px;
   margin: 10px;
 }
 

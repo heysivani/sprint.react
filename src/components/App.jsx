@@ -22,6 +22,8 @@ export default function App() {
       });
   }, []);
 
+  console.log("Photos array", photos);
+
   function updateView(string) {
     setCurrentView(string);
   }
