@@ -3,30 +3,47 @@ import _ from "lodash";
 import { getSingleObject } from "../utils/index.js";
 
 export default function AllPhotos(props) {
-  const [photo, setPhoto] = useState();
+  const [photos, setPhotos] = useState([]);
+  let urlsFun = [];
+  //retrievePhotos(pngsONLY);
 
-  async function retrievePhotos(photos) {
-    console.log("here");
-    let promiseKeys = photos.map(photo => getSingleObject(photo));
-    let retrievedPhotos = await Promise.all(promiseKeys).then(photosKeys => {
-      console.log("B&$S", photosKeys);
+  useEffect(() => {
+    // lets filter photos array to only keep pngs
+    let TENphotos = props.photos.slice(0, 30);
+    let pngsONLY = TENphotos.filter(photo => {
+      return photo.endsWith("png");
     });
+    console.log(pngsONLY);
+    // async function retrievePhotos(photos) {
+    let promiseKeys = pngsONLY.map(photo => getSingleObject(photo));
+    //let retrievedPhotos = await
+    Promise.all(promiseKeys)
+      .then(photosKeys => {
+        // a bunch of b64s
+        return photosKeys;
+      })
+      .then(base => {
+        let urls = [];
+        for (let b of base) {
+          urls.push("data:image/png;base64," + b);
+        }
+        console.log("urls", urls);
+        //urlsFun = urls;
+        setPhotos(urls);
+      });
+  }, [props.photos]);
 
-    //setPhoto("data:image/png;base64," + retrievedPhoto);
-
-    //  return retrievedPhoto;
-  }
-
-  retrievePhotos(props.photos);
+  // useEffect(() => {
+  //   console.log("photos", photos);
+  // }, [photos])
 
   return (
     <>
       <div className="ALL">
-        <img className="imageCell" src={photo} />
+        {photos.map(url => {
+          return <img className="imageCell" src={url} />;
+        })}
       </div>
     </>
   );
 }
-
-// console.log("PHOTO", photo);
-// console.log("BASE64PHOTO?", retrievedPhoto);
