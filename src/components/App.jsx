@@ -40,7 +40,11 @@ export default function App() {
         updateView={updateView}
         updatePhotos={updatePhotos}
       />
-      {currentView === "AllPhotos" ? <AllPhotos /> : <SinglePhoto />}
+      {currentView === "AllPhotos" ? (
+        <AllPhotos photos={photos} />
+      ) : (
+        <SinglePhoto />
+      )}
       <h1>Hello World!</h1>
     </div>
   );
