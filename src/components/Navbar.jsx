@@ -5,17 +5,9 @@ import Upload from "./Upload.jsx";
 import { saveObject } from "../utils/index.js";
 
 export default function Navbar(props) {
+  // saves photo to aws bucket and calls update photos from app
   async function savePhoto(file) {
-    console.log("FILE in navbar", file);
-    // need to encode this into base-64? doesn't fit object interface they expect in saveObject
-    const AWSfile = {
-      Key: file.name,
-      Body: file,
-      ACL: "public-read"
-    };
-    console.log("AWSfile", AWSfile);
-    const savedFile = await saveObject(AWSfile);
-    console.log("saved file", savedFile);
+    const savedFile = await saveObject(file);
     if (file.Key) {
       props.updatePhotos(savedFile.Key);
     } else {

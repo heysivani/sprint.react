@@ -26,9 +26,9 @@ export default function App() {
     setCurrentView(string);
   }
 
+  // update the photos array
   function updatePhotos(photo) {
-    console.log("PHOTO in app", photo);
-    setPhotos([...AllPhotos, photo]);
+    setPhotos([...photos, photo]);
   }
 
   console.log("Photos", photos);

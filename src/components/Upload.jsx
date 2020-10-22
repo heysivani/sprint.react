@@ -10,9 +10,9 @@ export default function Upload(props) {
       <div className="file-upload">
         <button
           onClick={() => {
-            //setFile(inputRef.current);
             console.log("File to upload", file);
             if (file) {
+              console.log("trying to save", file);
               props.savePhoto(file);
             }
           }}
