@@ -31,8 +31,6 @@ export default function App() {
     setPhotos([...photos, photo]);
   }
 
-  console.log("Photos", photos);
-
   return (
     <div className="app">
       <Navbar
