@@ -50,9 +50,8 @@ export default function App() {
       {currentView === "AllPhotos" ? (
         <AllPhotos photos={photos} getSelectedPhoto={getSelectedPhoto} />
       ) : (
-        <SinglePhoto />
+        <SinglePhoto photo={selectedPhoto} />
       )}
-      <h1>Hello World!</h1>
     </div>
   );
 }

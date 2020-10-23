@@ -15,7 +15,7 @@ export default function Upload(props) {
             }
           }}
         >
-          upload
+          Upload
         </button>
         <input
           type="file"

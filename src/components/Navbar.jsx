@@ -28,7 +28,8 @@ export default function Navbar(props) {
             }
           }}
         >
-          {props.currentView}
+          {" "}
+          Home
         </button>
 
         <Upload savePhoto={savePhoto} />
