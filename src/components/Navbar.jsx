@@ -20,6 +20,13 @@ export default function Navbar(props) {
       <div className="navbar">
         <button
           onClick={() => {
+            props.getFreshBucket();
+          }}
+        >
+          Refresh
+        </button>
+        <button
+          onClick={() => {
             // When clicked, change current view value to "AllPhotos"
             if (props.currentView === "SinglePhoto") {
               props.updateView("AllPhotos");

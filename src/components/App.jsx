@@ -22,6 +22,7 @@ export default function App() {
     theme === "light" ? setTheme("dark") : setTheme("light");
   };
   //THEME STUFF
+  // TODO add refresh button
 
   // Get photos on mount
   useEffect(() => {
@@ -65,6 +66,26 @@ export default function App() {
     setCurrentView("SinglePhoto");
   }
 
+  function getFreshBucket() {
+    listObjects()
+      .then(pics => {
+        console.log("CALLED REFRESH REFRESH BEZOS");
+        const picKeys = pics.map(pic => pic.Key);
+        return picKeys;
+      })
+      .then(picKeys => {
+        let TENphotos = picKeys.slice(0, 30);
+
+        let pngsONLY = TENphotos.filter(photo => {
+          return photo.endsWith("png");
+        });
+
+        localStorage.setItem("photos", JSON.stringify(pngsONLY));
+        console.log(JSON.parse(localStorage.getItem("photos")));
+        setPhotos(pngsONLY);
+      });
+  }
+
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <>
@@ -75,6 +96,7 @@ export default function App() {
             currentView={currentView}
             updateView={updateView}
             updatePhotos={updatePhotos}
+            getFreshBucket={getFreshBucket}
           />
           {currentView === "AllPhotos" ? (
             <AllPhotos photos={photos} getSelectedPhoto={getSelectedPhoto} />
