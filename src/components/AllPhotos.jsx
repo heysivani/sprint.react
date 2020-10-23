@@ -14,7 +14,7 @@ export default function AllPhotos(props) {
       .then(base => {
         let urls = [];
         for (let b of base) {
-          urls.push("data:image/png;base64," + b);
+          urls.push("data:image;base64," + b);
         }
         setPhotos(urls);
       });

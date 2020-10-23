@@ -35,15 +35,15 @@ export default function App() {
           return picKeys;
         })
         .then(picKeys => {
-          let TENphotos = picKeys.slice(0, 30);
+          let TENphotos = picKeys.slice(0, 10);
 
-          let pngsONLY = TENphotos.filter(photo => {
-            return photo.endsWith("png");
-          });
+          // let pngsONLY = TENphotos.filter(photo => {
+          //   return photo.endsWith("png");
+          // });
 
-          localStorage.setItem("photos", JSON.stringify(pngsONLY));
+          localStorage.setItem("photos", JSON.stringify(TENphotos));
           console.log(JSON.parse(localStorage.getItem("photos")));
-          setPhotos(pngsONLY);
+          setPhotos(TENphotos);
         });
     } else {
       /// else set state of photos tobe the photos that are held in the Widow.localStorage
@@ -74,15 +74,15 @@ export default function App() {
         return picKeys;
       })
       .then(picKeys => {
-        let TENphotos = picKeys.slice(0, 30);
+        let TENphotos = picKeys.slice(0, 10);
 
-        let pngsONLY = TENphotos.filter(photo => {
-          return photo.endsWith("png");
-        });
+        // let pngsONLY = TENphotos.filter(photo => {
+        //   return photo.endsWith("png");
+        // });
 
-        localStorage.setItem("photos", JSON.stringify(pngsONLY));
+        localStorage.setItem("photos", JSON.stringify(TENphotos));
         console.log(JSON.parse(localStorage.getItem("photos")));
-        setPhotos(pngsONLY);
+        setPhotos(TENphotos);
       });
   }
 
