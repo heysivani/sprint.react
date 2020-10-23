@@ -4,19 +4,9 @@ import { getSingleObject } from "../utils/index.js";
 
 export default function AllPhotos(props) {
   const [photos, setPhotos] = useState([]);
-  let urlsFun = [];
-  //retrievePhotos(pngsONLY);
 
   useEffect(() => {
-    // lets filter photos array to only keep pngs
-    let TENphotos = props.photos.slice(0, 30);
-    let pngsONLY = TENphotos.filter(photo => {
-      return photo.endsWith("png");
-    });
-    console.log(pngsONLY);
-    // async function retrievePhotos(photos) {
-    let promiseKeys = pngsONLY.map(photo => getSingleObject(photo));
-    //let retrievedPhotos = await
+    let promiseKeys = props.photos.map(photo => getSingleObject(photo));
     Promise.all(promiseKeys)
       .then(photosKeys => {
         // a bunch of b64s
@@ -32,10 +22,6 @@ export default function AllPhotos(props) {
         setPhotos(urls);
       });
   }, [props.photos]);
-
-  // useEffect(() => {
-  //   console.log("photos", photos);
-  // }, [photos])
 
   return (
     <>

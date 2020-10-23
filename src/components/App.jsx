@@ -10,6 +10,8 @@ export default function App() {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState("");
 
+  // 1. clean up array to be pngs in APP
+
   // Get photos on mount
   useEffect(() => {
     listObjects()
@@ -18,11 +20,15 @@ export default function App() {
         return picKeys;
       })
       .then(picKeys => {
-        setPhotos(picKeys);
+        let TENphotos = picKeys.slice(0, 30);
+        let pngsONLY = TENphotos.filter(photo => {
+          return photo.endsWith("png");
+        });
+        setPhotos(pngsONLY);
       });
   }, []);
 
-  console.log("Photos array", photos);
+  //console.log("Photos array", photos);
 
   function updateView(string) {
     setCurrentView(string);
