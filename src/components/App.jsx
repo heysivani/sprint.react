@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/styles.css";
 import Navbar from "./Navbar";
+///THEME STUFF
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./globalStyles.js";
+import { lightTheme, darkTheme } from "./Themes.js";
+///THEME STUFF
+
 import SinglePhoto from "./SinglePhoto";
 import AllPhotos from "./AllPhotos";
 import { getSingleObject, listObjects } from "../utils/index.js";
@@ -9,6 +15,13 @@ export default function App() {
   const [currentView, setCurrentView] = useState("AllPhotos");
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState("");
+
+  //THEME STUFF
+  const [theme, setTheme] = useState("light");
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+  //THEME STUFF
 
   // Get photos on mount
   useEffect(() => {
@@ -53,17 +66,23 @@ export default function App() {
   }
 
   return (
-    <div className="app">
-      <Navbar
-        currentView={currentView}
-        updateView={updateView}
-        updatePhotos={updatePhotos}
-      />
-      {currentView === "AllPhotos" ? (
-        <AllPhotos photos={photos} getSelectedPhoto={getSelectedPhoto} />
-      ) : (
-        <SinglePhoto photo={selectedPhoto} />
-      )}
-    </div>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <>
+        <GlobalStyles />
+        <div className="app">
+          <button onClick={themeToggler}>Switch Theme</button>
+          <Navbar
+            currentView={currentView}
+            updateView={updateView}
+            updatePhotos={updatePhotos}
+          />
+          {currentView === "AllPhotos" ? (
+            <AllPhotos photos={photos} getSelectedPhoto={getSelectedPhoto} />
+          ) : (
+            <SinglePhoto photo={selectedPhoto} />
+          )}
+        </div>
+      </>
+    </ThemeProvider>
   );
 }
