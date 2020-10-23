@@ -28,7 +28,6 @@ export default function Navbar(props) {
             }
           }}
         >
-          {" "}
           Home
         </button>
 

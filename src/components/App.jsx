@@ -12,18 +12,30 @@ export default function App() {
 
   // Get photos on mount
   useEffect(() => {
-    listObjects()
-      .then(pics => {
-        const picKeys = pics.map(pic => pic.Key);
-        return picKeys;
-      })
-      .then(picKeys => {
-        let TENphotos = picKeys.slice(0, 30);
-        let pngsONLY = TENphotos.filter(photo => {
-          return photo.endsWith("png");
+    /// only call to s3 if we do not have photos in local storage
+    if (localStorage.getItem("photos") === null) {
+      listObjects()
+        .then(pics => {
+          console.log("CALLED BEZOS BEEP BEEP BEZOS");
+          const picKeys = pics.map(pic => pic.Key);
+          return picKeys;
+        })
+        .then(picKeys => {
+          let TENphotos = picKeys.slice(0, 30);
+
+          let pngsONLY = TENphotos.filter(photo => {
+            return photo.endsWith("png");
+          });
+
+          localStorage.setItem("photos", JSON.stringify(pngsONLY));
+          console.log(JSON.parse(localStorage.getItem("photos")));
+          setPhotos(pngsONLY);
         });
-        setPhotos(pngsONLY);
-      });
+    } else {
+      /// else set state of photos tobe the photos that are held in the Widow.localStorage
+      console.log("RETRIEVING FROM LOCAL WHEEE");
+      setPhotos(JSON.parse(localStorage.getItem("photos")));
+    }
   }, []);
 
   function updateView(string) {
