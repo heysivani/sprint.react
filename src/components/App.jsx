@@ -22,7 +22,6 @@ export default function App() {
     theme === "light" ? setTheme("dark") : setTheme("light");
   };
   //THEME STUFF
-  // TODO add refresh button
 
   // Get photos on mount
   useEffect(() => {
@@ -30,16 +29,12 @@ export default function App() {
     if (localStorage.getItem("photos") === null) {
       listObjects()
         .then(pics => {
-          console.log("CALLED BEZOS BEEP BEEP BEZOS");
+          console.log("Retrieveing from s3 on MOUNT");
           const picKeys = pics.map(pic => pic.Key);
           return picKeys;
         })
         .then(picKeys => {
           let TENphotos = picKeys.slice(0, 10);
-
-          // let pngsONLY = TENphotos.filter(photo => {
-          //   return photo.endsWith("png");
-          // });
 
           localStorage.setItem("photos", JSON.stringify(TENphotos));
           console.log(JSON.parse(localStorage.getItem("photos")));
@@ -47,7 +42,7 @@ export default function App() {
         });
     } else {
       /// else set state of photos tobe the photos that are held in the Widow.localStorage
-      console.log("RETRIEVING FROM LOCAL WHEEE");
+      console.log("RETRIEVING FROM LOCAL Storage on mount");
       setPhotos(JSON.parse(localStorage.getItem("photos")));
     }
   }, []);
@@ -69,19 +64,16 @@ export default function App() {
   function getFreshBucket() {
     listObjects()
       .then(pics => {
-        console.log("CALLED REFRESH REFRESH BEZOS");
         const picKeys = pics.map(pic => pic.Key);
         return picKeys;
       })
       .then(picKeys => {
         let TENphotos = picKeys.slice(0, 10);
-
-        // let pngsONLY = TENphotos.filter(photo => {
-        //   return photo.endsWith("png");
-        // });
-
         localStorage.setItem("photos", JSON.stringify(TENphotos));
-        console.log(JSON.parse(localStorage.getItem("photos")));
+        console.log(
+          "curent localSTORAGE after RESFRESH",
+          JSON.parse(localStorage.getItem("photos"))
+        );
         setPhotos(TENphotos);
       });
   }
