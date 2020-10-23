@@ -9,7 +9,6 @@ export default function AllPhotos(props) {
     let promiseKeys = props.photos.map(photo => getSingleObject(photo));
     Promise.all(promiseKeys)
       .then(photosKeys => {
-        // a bunch of b64s
         return photosKeys;
       })
       .then(base => {
@@ -17,8 +16,6 @@ export default function AllPhotos(props) {
         for (let b of base) {
           urls.push("data:image/png;base64," + b);
         }
-        console.log("urls", urls);
-        //urlsFun = urls;
         setPhotos(urls);
       });
   }, [props.photos]);
@@ -26,8 +23,18 @@ export default function AllPhotos(props) {
   return (
     <>
       <div className="ALL">
-        {photos.map(url => {
-          return <img className="imageCell" src={url} />;
+        {photos.map((url, i) => {
+          return (
+            <img
+              key={i}
+              onClick={() => {
+                photos.indexOf(url);
+                props.getSelectedPhoto(url);
+              }}
+              className="imageCell"
+              src={url}
+            />
+          );
         })}
       </div>
     </>

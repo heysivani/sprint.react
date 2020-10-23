@@ -10,8 +10,6 @@ export default function App() {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState("");
 
-  // 1. clean up array to be pngs in APP
-
   // Get photos on mount
   useEffect(() => {
     listObjects()
@@ -28,8 +26,6 @@ export default function App() {
       });
   }, []);
 
-  //console.log("Photos array", photos);
-
   function updateView(string) {
     setCurrentView(string);
   }
@@ -37,6 +33,11 @@ export default function App() {
   // update the photos array
   function updatePhotos(photo) {
     setPhotos([...photos, photo]);
+  }
+
+  function getSelectedPhoto(url) {
+    setSelectedPhoto(url);
+    setCurrentView("SinglePhoto");
   }
 
   return (
@@ -47,7 +48,7 @@ export default function App() {
         updatePhotos={updatePhotos}
       />
       {currentView === "AllPhotos" ? (
-        <AllPhotos photos={photos} />
+        <AllPhotos photos={photos} getSelectedPhoto={getSelectedPhoto} />
       ) : (
         <SinglePhoto />
       )}
